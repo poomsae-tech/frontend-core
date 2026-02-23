@@ -27,7 +27,7 @@ export function UserLayout({ navItems = [], onLogout }: UserLayoutProps) {
   const user = useAuthStore((state) => state.user);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen  flex flex-col">
       <header className="border-b bg-background">
         <div className="container flex items-center mx-auto px-4 h-14">
           <nav className=" flex items-center gap-6 ">
@@ -76,10 +76,9 @@ export function UserLayout({ navItems = [], onLogout }: UserLayoutProps) {
         </div>
       </header>
 
-      <main className="flex-1">
+      <main className="flex-1 grid container mx-auto px-4 py-6">
         <Outlet />
       </main>
-
       <footer className="border-t py-4">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} Poomsae Tech

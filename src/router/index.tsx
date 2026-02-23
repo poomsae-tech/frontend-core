@@ -17,13 +17,16 @@ import {
   LoginPage,
   NotFoundPage,
   ComplaintsPage,
+  UserMainPage,
+  UserProfilePage,
+  UserStatisticPage,
+  UserUpcomingEventsPage,
   // LogsPage,
 } from "@/pages/index";
 import { RouteErrorBoundary } from "@/components/error-boundary";
 import { useAuthStore } from "@/features/auth/auth.store";
 import { AdminLayout, type NavItem } from "@/features/layout/admin-layout";
 import { UserLayout } from "@/features/layout/user-layout";
-import { UserMainPage } from "@/features/user/main/user-mane-page";
 import * as authMiddleware from "@/features/auth/auth.middleware";
 
 const adminNavItems: NavItem[] = [
@@ -36,7 +39,7 @@ const adminNavItems: NavItem[] = [
     icon: <Building2 size={16} />,
   },
 ];
-const userNavItems: NavItem[] = [
+export const userNavItems: NavItem[] = [
   { to: "/", label: "Главная", icon: <Home size={16} />, end: true },
   { to: "/profile", label: "Профиль", icon: <User size={16} /> },
   { to: "/statistics", label: "Статистика", icon: <BarChart3 size={16} /> },
@@ -115,9 +118,9 @@ const router = createBrowserRouter([
         index: true,
         element: <UserMainPage />,
       },
-      // { path: "profile", element: <UserProfilePage /> },
-      // { path: "statistics", element: <UserStatisticsPage /> },
-      // { path: "upcoming-events", element: <UserUpcomingEventsPage /> },
+      { path: "profile", element: <UserProfilePage /> },
+      { path: "statistics", element: <UserStatisticPage /> },
+      { path: "upcoming-events", element: <UserUpcomingEventsPage /> },
     ],
   },
   {

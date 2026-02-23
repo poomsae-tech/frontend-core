@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -37,7 +38,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin}>
+          <form id="login_form" onSubmit={handleLogin}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="login">Логин</FieldLabel>
@@ -68,15 +69,19 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Field>
-              <Field>
-                <Button type="submit">Войти</Button>
-                <Button variant="outline" type="button">
-                  Войти через Google
-                </Button>
-              </Field>
             </FieldGroup>
           </form>
         </CardContent>
+        <CardFooter>
+          <Field>
+            <Button form="login_form" type="submit">
+              Войти
+            </Button>
+            <Button variant="outline" type="button">
+              Войти через Google
+            </Button>
+          </Field>
+        </CardFooter>
       </Card>
     </div>
   );
