@@ -9,11 +9,24 @@ import {
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useAuthStore } from "@/features/auth/auth.store";
+import { useState } from "react";
 
 export function LoginForm({
   className,
+  onLogin,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & { onLogin: () => void }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const login = useAuthStore((s) => s.login);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    login({ username: username, password: password });
+    onLogin();
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -24,11 +37,18 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleLogin}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="login">Логин</FieldLabel>
-                <Input id="login" type="text" placeholder="admin" required />
+                <Input
+                  id="login"
+                  type="text"
+                  placeholder="admin"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -40,7 +60,13 @@ export function LoginForm({
                     Забыли пароль?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Field>
               <Field>
                 <Button type="submit">Войти</Button>

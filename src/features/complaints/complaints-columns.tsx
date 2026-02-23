@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
-import { type ColumnDef } from "@/components/admin-data-table";
+import { type ColumnDef } from "@/components/custom-data-table";
 import type { Complaint, ComplaintStatus } from "./complaints.types";
+import { OrganizationLeading } from "@/components/table-organization-leading";
 
 export const MOCK_COMPLAINTS: Complaint[] = [
   {
@@ -9,6 +10,8 @@ export const MOCK_COMPLAINTS: Complaint[] = [
     topic: "Обслуживание",
     date: "22:34 20.02.2026",
     status: "На рассмотрении",
+    avatar:
+      "https://thumbs.dreamstime.com/b/%D1%82%D1%85%D1%8D%D0%BA%D0%B2%D0%BE%D0%BD%D0%B4%D0%BE-%D0%B1%D0%BE%D0%B5%D0%B2%D0%BE%D0%B5-%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%BE-39735708.jpg",
   },
   {
     id: 2,
@@ -53,29 +56,13 @@ const STATUS_STYLES: Record<ComplaintStatus, string> = {
   Решена: "bg-green-500/15 text-green-600 border-green-500/30",
 };
 
-function OrganizationAvatar({ name }: { name: string }) {
-  const initials = name
-    .split(" ")
-    .map((word) => word[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-
-  return (
-    <div className="flex items-center gap-3">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground select-none">
-        {initials}
-      </div>
-      <span className="font-medium">{name}</span>
-    </div>
-  );
-}
-
 export const COMPLAINTS_COLUMNS: ColumnDef<Complaint>[] = [
   {
     key: "organization",
     header: "Организация",
-    cell: (row) => <OrganizationAvatar name={row.organization} />,
+    cell: (row) => (
+      <OrganizationLeading name={row.organization} avatar={row.avatar} />
+    ),
   },
   {
     key: "topic",

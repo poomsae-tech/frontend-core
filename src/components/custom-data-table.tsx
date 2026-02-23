@@ -18,7 +18,7 @@ export interface ColumnDef<T> {
   cell: (row: T) => React.ReactNode;
 }
 
-interface AdminDataTableProps<T> {
+interface CustomDataTableProps<T> {
   title: string;
   columns: ColumnDef<T>[];
   data: T[];
@@ -26,13 +26,13 @@ interface AdminDataTableProps<T> {
   className?: string;
 }
 
-export function AdminDataTable<T>({
+export function CustomDataTable<T>({
   title,
   columns,
   data,
   backTo,
   className,
-}: AdminDataTableProps<T>) {
+}: CustomDataTableProps<T>) {
   const navigate = useNavigate();
 
   const handleBack = () => {

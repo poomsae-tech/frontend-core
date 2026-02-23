@@ -1,7 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { AdminDataTable, type ColumnDef } from "@/components/admin-data-table";
+import {
+  CustomDataTable,
+  type ColumnDef,
+} from "@/components/custom-data-table";
 
 interface Row {
   id: number;
@@ -21,7 +24,7 @@ const DATA: Row[] = [
 function renderTable(data: Row[] = DATA) {
   return render(
     <MemoryRouter>
-      <AdminDataTable title="Тест" columns={COLUMNS} data={data} />
+      <CustomDataTable title="Тест" columns={COLUMNS} data={data} />
     </MemoryRouter>,
   );
 }
