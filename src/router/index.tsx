@@ -1,15 +1,31 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Layout } from "@/components/navbar-layout";
-import type { NavItem } from "@/components/navbar-layout";
-import { Home, Flag, ScrollText, Building2 } from "lucide-react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
+import {
+  Home,
+  Flag,
+  ScrollText,
+  Building2,
+  User,
+  BarChart3,
+  Calendar,
+} from "lucide-react";
 import {
   DashboardPage,
   LoginPage,
   NotFoundPage,
   ComplaintsPage,
-  LogsPage,
+  UserMainPage,
+  UserProfilePage,
+  UserStatisticPage,
+  UserUpcomingStartsPage,
+  // LogsPage,
 } from "@/pages/index";
 import { RouteErrorBoundary } from "@/components/error-boundary";
+import type { NavItem } from "@/features/layout/main-layout";
+import { MainLayout } from "@/features/layout/main-layout";
 
 const adminNavItems: NavItem[] = [
   { to: "/admin", label: "Главная", icon: <Home size={16} />, end: true },
@@ -22,14 +38,43 @@ const adminNavItems: NavItem[] = [
   },
 ];
 
+export const userNavItems: NavItem[] = [
+  { to: "/user", label: "Главная", icon: <Home size={16} />, end: true },
+  { to: "/user/profile", label: "Профиль", icon: <User size={16} /> },
+  {
+    to: "/user/statistics",
+    label: "Статистика",
+    icon: <BarChart3 size={16} />,
+  },
+  {
+    to: "/user/upcoming-starts",
+    label: "Ближайшие старты",
+    icon: <Calendar size={16} />,
+  },
+];
+
+function MainScreen() {
+  const navigate = useNavigate();
+
+  return (
+    <MainLayout
+      navItems={userNavItems}
+      onLogout={() => {
+        navigate("/login");
+      }}
+    />
+  );
+}
+
 const router = createBrowserRouter([
   {
-    path: "admin/login",
+    path: "/login",
     element: <LoginPage />,
     errorElement: <RouteErrorBoundary />,
   },
+  // ADMIN ROUTES
   {
-    element: <Layout navItems={adminNavItems} />,
+    element: <MainScreen />,
     path: "admin",
     errorElement: <RouteErrorBoundary />,
     children: [
@@ -41,10 +86,25 @@ const router = createBrowserRouter([
         path: "complaints",
         element: <ComplaintsPage />,
       },
+      // {
+      //   path: "logs",
+      //   element: <LogsPage />,
+      // },
+    ],
+  },
+  // USER ROUTES
+  {
+    element: <MainScreen />,
+    path: "/user",
+    errorElement: <RouteErrorBoundary />,
+    children: [
       {
-        path: "logs",
-        element: <LogsPage />,
+        index: true,
+        element: <UserMainPage />,
       },
+      { path: "profile", element: <UserProfilePage /> },
+      { path: "statistics", element: <UserStatisticPage /> },
+      { path: "upcoming-starts", element: <UserUpcomingStartsPage /> },
     ],
   },
   {

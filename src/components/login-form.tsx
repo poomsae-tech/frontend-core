@@ -4,16 +4,27 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 export function LoginForm({
   className,
+  onLogin,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & { onLogin: () => void }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    onLogin();
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -24,11 +35,18 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form id="login_form" onSubmit={handleLogin}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="login">Логин</FieldLabel>
-                <Input id="login" type="text" placeholder="admin" required />
+                <Input
+                  id="login"
+                  type="text"
+                  placeholder="admin"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -40,17 +58,27 @@ export function LoginForm({
                     Забыли пароль?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
-              </Field>
-              <Field>
-                <Button type="submit">Войти</Button>
-                <Button variant="outline" type="button">
-                  Войти через Google
-                </Button>
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Field>
             </FieldGroup>
           </form>
         </CardContent>
+        <CardFooter>
+          <Field>
+            <Button form="login_form" type="submit">
+              Войти
+            </Button>
+            <Button variant="outline" type="button">
+              Войти через Google
+            </Button>
+          </Field>
+        </CardFooter>
       </Card>
     </div>
   );
