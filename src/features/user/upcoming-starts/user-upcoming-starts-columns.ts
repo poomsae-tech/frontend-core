@@ -1,11 +1,15 @@
 import type { ColumnDef } from "@/components/custom-data-table";
 
-export type EventStatus = "confirmed" | "draw" | "imminent" | "registration";
+export type StartEventStatus =
+  | "confirmed"
+  | "draw"
+  | "imminent"
+  | "registration";
 
 export type UpcomingEvent = {
   date: Date;
   tournamentName: string;
-  status: EventStatus;
+  status: StartEventStatus;
 };
 
 export const MOCK_UPCOMING_EVENTS: UpcomingEvent[] = [

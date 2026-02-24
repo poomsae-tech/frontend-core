@@ -20,14 +20,12 @@ import {
   UserMainPage,
   UserProfilePage,
   UserStatisticPage,
-  UserUpcomingEventsPage,
+  UserUpcomingStartsPage,
   // LogsPage,
 } from "@/pages/index";
 import { RouteErrorBoundary } from "@/components/error-boundary";
-import { useAuthStore } from "@/features/auth/auth.store";
-import { AdminLayout, type NavItem } from "@/features/layout/admin-layout";
-import { UserLayout } from "@/features/layout/user-layout";
-import * as authMiddleware from "@/features/auth/auth.middleware";
+import type { NavItem } from "@/features/layout/main-layout";
+import { MainLayout } from "@/features/layout/main-layout";
 
 const adminNavItems: NavItem[] = [
   { to: "/admin", label: "Главная", icon: <Home size={16} />, end: true },
@@ -39,40 +37,29 @@ const adminNavItems: NavItem[] = [
     icon: <Building2 size={16} />,
   },
 ];
+
 export const userNavItems: NavItem[] = [
-  { to: "/", label: "Главная", icon: <Home size={16} />, end: true },
-  { to: "/profile", label: "Профиль", icon: <User size={16} /> },
-  { to: "/statistics", label: "Статистика", icon: <BarChart3 size={16} /> },
+  { to: "/user", label: "Главная", icon: <Home size={16} />, end: true },
+  { to: "/user/profile", label: "Профиль", icon: <User size={16} /> },
   {
-    to: "/upcoming-events",
+    to: "/user/statistics",
+    label: "Статистика",
+    icon: <BarChart3 size={16} />,
+  },
+  {
+    to: "/user/upcoming-starts",
     label: "Ближайшие старты",
     icon: <Calendar size={16} />,
   },
 ];
 
-function AdminScreen() {
+function MainScreen() {
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
 
   return (
-    <AdminLayout
-      navItems={adminNavItems}
-      onLogout={() => {
-        logout();
-        navigate("/login");
-      }}
-    />
-  );
-}
-function UserScreen() {
-  const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
-
-  return (
-    <UserLayout
+    <MainLayout
       navItems={userNavItems}
       onLogout={() => {
-        logout();
         navigate("/login");
       }}
     />
@@ -84,14 +71,12 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginPage />,
     errorElement: <RouteErrorBoundary />,
-    middleware: [authMiddleware.loginMiddleware],
   },
   // ADMIN ROUTES
   {
-    element: <AdminScreen />,
+    element: <MainScreen />,
     path: "admin",
     errorElement: <RouteErrorBoundary />,
-    middleware: [authMiddleware.adminMiddleware],
     children: [
       {
         index: true,
@@ -109,10 +94,9 @@ const router = createBrowserRouter([
   },
   // USER ROUTES
   {
-    element: <UserScreen />,
-    path: "/",
+    element: <MainScreen />,
+    path: "/user",
     errorElement: <RouteErrorBoundary />,
-    middleware: [authMiddleware.userMiddleware],
     children: [
       {
         index: true,
@@ -120,7 +104,7 @@ const router = createBrowserRouter([
       },
       { path: "profile", element: <UserProfilePage /> },
       { path: "statistics", element: <UserStatisticPage /> },
-      { path: "upcoming-events", element: <UserUpcomingEventsPage /> },
+      { path: "upcoming-starts", element: <UserUpcomingStartsPage /> },
     ],
   },
   {

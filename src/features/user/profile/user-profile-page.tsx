@@ -1,11 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuthStore } from "@/features/auth/auth.store";
 import { ProfileField } from "./profile-field";
 import { InsuranceIndicatorCard } from "./insurance-indicator-card";
 
 export function UserProfilePage() {
-  const user = useAuthStore((s) => s.user);
-
   return (
     <Card className="gap-16">
       <CardHeader className="pb-10 pt-12">
@@ -16,21 +13,18 @@ export function UserProfilePage() {
 
       <CardContent className="space-y-16 max-w-xl w-full mx-auto">
         <div className="grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2">
-          <ProfileField
-            label="Дата рождения"
-            value={user?.profile?.birth ?? "N/A"}
-          />
+          <ProfileField label="Дата рождения" value="14.12.2003" />
           <ProfileField
             className={"md:*:text-end md:*:justify-end"}
             label="Вес"
-            value={user?.profile?.weight ?? "N/A"}
+            value="74"
           />
 
-          <ProfileField label="Пояс" value={user?.profile?.belt ?? "N/A"} />
+          <ProfileField label="Пояс" value="Красный" />
           <ProfileField
             className={"md:*:text-end md:*:justify-end"}
             label="Разряд"
-            value={user?.profile?.rank ?? "N/A"}
+            value="КМС"
           />
         </div>
 

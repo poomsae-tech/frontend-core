@@ -41,7 +41,7 @@ export function UserStatisticPage() {
             <span>1</span>
           </div>
           <Popover>
-            <PopoverTrigger>
+            <PopoverTrigger asChild>
               <Button
                 variant={"secondary"}
                 size={"icon-lg"}

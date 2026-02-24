@@ -2,13 +2,11 @@ import { Outlet, NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
-import { useAuthStore } from "@/features/auth/auth.store";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "../../components/ui/avatar";
-import { getNameInitials } from "@/lib/get-name-initials";
 import { Button } from "@/components/ui/button";
 
 export interface NavItem {
@@ -18,14 +16,12 @@ export interface NavItem {
   end?: boolean;
 }
 
-interface UserLayoutProps {
+interface MainLayoutProps {
   navItems?: NavItem[];
   onLogout?: () => void;
 }
 
-export function UserLayout({ navItems = [], onLogout }: UserLayoutProps) {
-  const user = useAuthStore((state) => state.user);
-
+export function MainLayout({ navItems = [], onLogout }: MainLayoutProps) {
   return (
     <div className="min-h-screen  flex flex-col">
       <header className="border-b bg-background">
@@ -53,19 +49,10 @@ export function UserLayout({ navItems = [], onLogout }: UserLayoutProps) {
           <div className="ml-auto gap-3 flex items-center">
             <div className="flex items-center gap-3">
               <Avatar>
-                <AvatarImage
-                  src={user?.profile?.avatar}
-                  alt={user?.username + "_avatar"}
-                />
-                <AvatarFallback>
-                  {user?.profile?.fullname
-                    ? getNameInitials(user.profile.fullname)
-                    : "N/A"}
-                </AvatarFallback>
+                <AvatarImage />
+                <AvatarFallback>N/A</AvatarFallback>
               </Avatar>
-              <span className="font-medium">
-                {user?.profile?.fullname ?? "N/A"}
-              </span>
+              <span className="font-medium">N/A</span>
             </div>
 
             <Button onClick={onLogout} variant={"ghost"}>

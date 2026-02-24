@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   MOCK_UPCOMING_EVENTS,
   UPCOMING_EVENTS_COLUMNS,
-  type EventStatus,
-} from "./user-upcoming-events-columns";
+  type StartEventStatus,
+} from "./user-upcoming-starts-columns";
 import { Funnel, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,8 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-export function UserUpcomingEventsPage() {
-  const [statusFilter, setStatusFilter] = useState<EventStatus | null>(null);
+export function UserUpcomingStartsPage() {
+  const [statusFilter, setStatusFilter] = useState<StartEventStatus | null>(
+    null,
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredEvents = MOCK_UPCOMING_EVENTS.filter((event) => {
@@ -27,7 +29,7 @@ export function UserUpcomingEventsPage() {
     return matchesStatus && matchesSearch;
   });
 
-  const getStatusLabel = (status: EventStatus) => {
+  const getStatusLabel = (status: StartEventStatus) => {
     switch (status) {
       case "confirmed":
         return "Подтверждена";
@@ -85,7 +87,7 @@ export function UserUpcomingEventsPage() {
                     "draw",
                     "imminent",
                     "registration",
-                  ] as EventStatus[]
+                  ] as StartEventStatus[]
                 ).map((status) => (
                   <Button
                     key={status}

@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useAuthStore } from "@/features/auth/auth.store";
 import { useState } from "react";
 
 export function LoginForm({
@@ -20,11 +19,9 @@ export function LoginForm({
 }: React.ComponentProps<"div"> & { onLogin: () => void }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const login = useAuthStore((s) => s.login);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    login({ username: username, password: password });
     onLogin();
   };
 
