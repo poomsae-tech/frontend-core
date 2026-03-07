@@ -1,58 +1,17 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { userNavItems } from "@/router";
-import { Image } from "lucide-react";
-import { Link } from "react-router-dom";
+import { MOCK_USER_DATA } from "@/shared/mocks/user.mock";
 
 export function UserMainPage() {
+  const user = MOCK_USER_DATA;
+  const firstName = user.fullName.split(" ")[1];
+
   return (
-    <Card className="space-y-0 p-0 gap-12 h-full">
-      <CardHeader className="pt-12 px-12">
-        <CardTitle className="mx-auto text-2xl font-medium">
-          Привет, Пользователь!
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-12 h-full">
-        <div className="flex h-full w-full items-center gap-12">
-          <picture className="size-80 rounded-2xl overflow-hidden flex">
-            <div className="size-full flex items-center justify-center bg-gray-300 text-white">
-              <Image size={168} />
-            </div>
-          </picture>
-          <div className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2">
-            <span className="font-semibold text-lg">ФИО</span>
-            <span className="font-medium text-lg">Иванов Иван Иванович</span>
-            <span className="font-semibold text-lg">Клуб</span>
-            <span className="font-medium text-lg">НазваниеКлуба</span>
-            <span className="font-semibold text-lg">Тренер</span>
-            <span className="font-medium text-lg">ИмяТренера</span>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="py-12 px-12">
-        <div className="flex flex-wrap gap-3 w-full">
-          {userNavItems.map((item) => {
-            if (item.to === location.pathname) return;
-            return (
-              <Link className="flex-2/5" key={item.label} to={item.to}>
-                <Button
-                  className="w-full text-lg py-6 *:last:size-6! rounded-2xl"
-                  size={"lg"}
-                >
-                  {item.label}
-                  {item.icon}
-                </Button>
-              </Link>
-            );
-          })}
-        </div>
-      </CardFooter>
-    </Card>
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
+      <h1 className="text-4xl md:text-5xl font-light tracking-tight text-foreground mb-4">
+        Привет, <span className="font-semibold text-primary">{firstName}</span>
+      </h1>
+      <p className="text-muted-foreground text-lg max-w-md font-medium uppercase tracking-[0.2em] opacity-60">
+        Добро пожаловать в Poomsae Tech
+      </p>
+    </div>
   );
 }

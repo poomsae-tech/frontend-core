@@ -1,5 +1,11 @@
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CustomDataTable } from "@/components/custom-data-table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/page-header";
 import {
   MOCK_STATISTICS,
   STATISTIC_COLUMNS,
@@ -13,6 +19,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export function UserStatisticPage() {
   const [resultFilter, setResultFilter] = useState<Stat["result"] | null>(null);
@@ -21,81 +28,97 @@ export function UserStatisticPage() {
     ? MOCK_STATISTICS.filter((stat) => stat.result === resultFilter)
     : MOCK_STATISTICS;
 
+  const wins = MOCK_STATISTICS.filter(s => s.result === "win").length;
+  const losses = MOCK_STATISTICS.filter(s => s.result === "lose").length;
+
   return (
-    <Card>
-      <CardHeader className="pb-10 pt-12">
-        <CardTitle className="mx-auto text-4xl font-semibold uppercase tracking-wide text-foreground">
-          Статистика
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-0 items-center flex flex-col gap-12">
-        <div className="flex gap-6 w-full px-12">
-          <div className="flex justify-center flex-1 items-center text-base font-medium gap-8 rounded-full bg-secondary px-6 py-4">
-            <Smile />
-            <span>Побед:</span>
-            <span>2</span>
-          </div>
-          <div className="flex justify-center flex-1 items-center text-base font-medium gap-8 rounded-full bg-secondary px-6 py-4">
-            <Frown />
-            <span>Поражений:</span>
-            <span>1</span>
-          </div>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"secondary"}
-                size={"icon-lg"}
-                className="rounded-full h-full cursor-pointer aspect-square w-fit"
-              >
-                <Funnel size={16} className="size-6" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              className="w-fit *:*:justify-start"
-              align="end"
-              sideOffset={8}
+    <div className="container mx-auto pb-12 space-y-6">
+      <PageHeader title="Статистика" showBack backTo="/user">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={resultFilter ? "default" : "outline"}
+              size="sm"
+              className="rounded-xl gap-2 font-semibold"
             >
-              <div className="flex flex-col gap-1">
-                <p className="text-xs font-medium text-muted-foreground px-2 py-1.5">
-                  Фильтр по результату
-                </p>
-                <Button
-                  className="cursor-pointer"
-                  disabled={resultFilter === "win"}
-                  size={"lg"}
-                  variant={"ghost"}
-                  onClick={() => setResultFilter("win")}
-                >
-                  Победы
-                </Button>
-                <Button
-                  className="cursor-pointer"
-                  disabled={resultFilter === "lose"}
-                  size={"lg"}
-                  variant={"ghost"}
-                  onClick={() => setResultFilter("lose")}
-                >
-                  Поражения
-                </Button>
-                {resultFilter && (
-                  <>
-                    <div className="h-px bg-border my-1" />
-                    <Button
-                      className="cursor-pointer"
-                      size={"lg"}
-                      variant={"destructive"}
-                      onClick={() => setResultFilter(null)}
-                    >
-                      Очистить
-                    </Button>
-                  </>
-                )}{" "}
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <CustomDataTable data={filteredStats} columns={STATISTIC_COLUMNS} />
-      </CardContent>
-    </Card>
+              <Funnel size={14} />
+              <span>Фильтр</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-56 p-2" align="end" sideOffset={8}>
+            <div className="space-y-1">
+              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest px-2 py-1.5 border-b mb-1">
+                По результату
+              </p>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn("w-full justify-start font-medium rounded-lg px-2", resultFilter === "win" && "bg-primary/10 text-primary")}
+                onClick={() => setResultFilter("win")}
+              >
+                Победы
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn("w-full justify-start font-medium rounded-lg px-2", resultFilter === "lose" && "bg-primary/10 text-primary")}
+                onClick={() => setResultFilter("lose")}
+              >
+                Поражения
+              </Button>
+              {resultFilter && (
+                <>
+                  <div className="h-px bg-border my-1" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start font-medium text-destructive hover:text-destructive hover:bg-destructive/5 rounded-lg px-2"
+                    onClick={() => setResultFilter(null)}
+                  >
+                    Сбросить
+                  </Button>
+                </>
+              )}
+            </div>
+          </PopoverContent>
+        </Popover>
+      </PageHeader>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+        <Card className="border shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              Побед
+            </CardTitle>
+            <Smile className="size-4 text-green-500" />
+          </CardHeader>
+          <CardContent>
+            <span className="text-3xl font-semibold">{wins}</span>
+          </CardContent>
+        </Card>
+        <Card className="border shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              Поражений
+            </CardTitle>
+            <Frown className="size-4 text-destructive" />
+          </CardHeader>
+          <CardContent>
+            <span className="text-3xl font-semibold">{losses}</span>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="overflow-hidden border shadow-sm">
+        <CardHeader className="border-b bg-muted/30 py-4">
+          <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            История выступлений
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <CustomDataTable data={filteredStats} columns={STATISTIC_COLUMNS} />
+        </CardContent>
+      </Card>
+    </div>
   );
 }
