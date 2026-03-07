@@ -21,18 +21,6 @@ export function UserMainPage() {
       <CardContent className="px-12 h-full">
         <div className="flex h-full w-full items-center gap-12">
           <picture className="size-80 rounded-2xl overflow-hidden flex">
-            {/* 
-                        <img
-              src={user.profile.avatar}
-              alt={user?.username + "_avatar"}
-              className="size-full object-cover object-center"
-              loading="lazy"
-              decoding="async"
-              fetchPriority="high"
-              width={320}
-              height={320}
-            /> */}
-
             <div className="size-full flex items-center justify-center bg-gray-300 text-white">
               <Image size={168} />
             </div>

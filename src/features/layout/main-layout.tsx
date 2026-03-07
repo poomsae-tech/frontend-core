@@ -2,11 +2,7 @@ import { Outlet, NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
 export interface NavItem {
@@ -18,10 +14,9 @@ export interface NavItem {
 
 interface MainLayoutProps {
   navItems?: NavItem[];
-  onLogout?: () => void;
 }
 
-export function MainLayout({ navItems = [], onLogout }: MainLayoutProps) {
+export function MainLayout({ navItems = [] }: MainLayoutProps) {
   return (
     <div className="min-h-screen  flex flex-col">
       <header className="border-b bg-background">
@@ -55,7 +50,7 @@ export function MainLayout({ navItems = [], onLogout }: MainLayoutProps) {
               <span className="font-medium">N/A</span>
             </div>
 
-            <Button onClick={onLogout} variant={"ghost"}>
+            <Button variant={"ghost"}>
               Выход
               <ArrowRight />
             </Button>

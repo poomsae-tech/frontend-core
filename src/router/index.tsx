@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useNavigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
   Home,
   Flag,
@@ -26,6 +22,7 @@ import {
 import { RouteErrorBoundary } from "@/components/error-boundary";
 import type { NavItem } from "@/features/layout/main-layout";
 import { MainLayout } from "@/features/layout/main-layout";
+import type { UserRole } from "@/shared/types/user.types";
 
 const adminNavItems: NavItem[] = [
   { to: "/admin", label: "Главная", icon: <Home size={16} />, end: true },
@@ -53,18 +50,12 @@ export const userNavItems: NavItem[] = [
   },
 ];
 
-function MainScreen() {
-  const navigate = useNavigate();
+const NAV_ITEMS_BY_ROLE_MAP: Record<UserRole, NavItem[]> = {
+  admin: adminNavItems,
+  default: userNavItems,
+};
 
-  return (
-    <MainLayout
-      navItems={userNavItems}
-      onLogout={() => {
-        navigate("/login");
-      }}
-    />
-  );
-}
+const currentRole: UserRole = "default";
 
 const router = createBrowserRouter([
   {
@@ -74,7 +65,7 @@ const router = createBrowserRouter([
   },
   // ADMIN ROUTES
   {
-    element: <MainScreen />,
+    element: <MainLayout navItems={NAV_ITEMS_BY_ROLE_MAP[currentRole]} />,
     path: "admin",
     errorElement: <RouteErrorBoundary />,
     children: [
@@ -94,7 +85,7 @@ const router = createBrowserRouter([
   },
   // USER ROUTES
   {
-    element: <MainScreen />,
+    element: <MainLayout navItems={NAV_ITEMS_BY_ROLE_MAP[currentRole]} />,
     path: "/user",
     errorElement: <RouteErrorBoundary />,
     children: [
