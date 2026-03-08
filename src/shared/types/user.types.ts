@@ -1,12 +1,5 @@
-export type UserRole = "default" | "admin";
+import type { changePasswordSchema, userProfileSchema } from "../schemas/user-profile.schema";
+import { z } from "zod";
 
-export interface UserProfileData {
-    fullName: string;
-    club: string;
-    trainer: string;
-    birthDate: string;
-    weight: string;
-    belt: string;
-    rank: string;
-    avatarUrl?: string;
-}
+export type UserProfileData = z.infer<typeof userProfileSchema>;
+export type ChangePasswordData = z.infer<typeof changePasswordSchema>;
