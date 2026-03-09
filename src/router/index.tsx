@@ -1,36 +1,31 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Layout } from "@/components/navbar-layout";
-import type { NavItem } from "@/components/navbar-layout";
-import { Home, Flag, ScrollText, Building2 } from "lucide-react";
-import {
-  DashboardPage,
-  LoginPage,
-  NotFoundPage,
-  ComplaintsPage,
-  LogsPage,
-} from "@/pages/index";
 import { RouteErrorBoundary } from "@/components/error-boundary";
+import { MainLayout } from "@/features/layout/main-layout";
+import { ADMIN_NAV_ITEMS, USER_NAV_ITEMS } from "./nav-config";
 
-const adminNavItems: NavItem[] = [
-  { to: "/admin", label: "Главная", icon: <Home size={16} />, end: true },
-  { to: "/admin/complaints", label: "Жалобы", icon: <Flag size={16} /> },
-  { to: "/admin/logs", label: "Логи", icon: <ScrollText size={16} /> },
-  {
-    to: "/admin/organizations",
-    label: "Организации",
-    icon: <Building2 size={16} />,
-  },
-];
+// Admin Features
+import { DashboardPage } from "@/features/admin/dashboard/dashboard-page";
+import { ComplaintsPage } from "@/features/admin/complaints/complaints-page";
+
+// User Features
+import { UserMainPage } from "@/features/user/main/user-main-page";
+import { UserProfilePage } from "@/features/user/profile/user-profile-page";
+import { UserStatisticPage } from "@/features/user/statistic/user-statistic-page";
+import { UserUpcomingStartsPage } from "@/features/user/upcoming-starts/user-upcoming-starts-page";
+
+// Shared/Auth Features
+import { LoginPage } from "@/features/auth/login-page";
+import { NotFoundPage } from "@/features/layout/not-found-page";
 
 const router = createBrowserRouter([
   {
-    path: "admin/login",
+    path: "/login",
     element: <LoginPage />,
     errorElement: <RouteErrorBoundary />,
   },
   {
-    element: <Layout navItems={adminNavItems} />,
-    path: "admin",
+    path: "/admin",
+    element: <MainLayout navItems={ADMIN_NAV_ITEMS} />,
     errorElement: <RouteErrorBoundary />,
     children: [
       {
@@ -42,10 +37,32 @@ const router = createBrowserRouter([
         element: <ComplaintsPage />,
       },
       {
+        path: "organizations",
+        element: <div>Организации (В разработке)</div>,
+      },
+      {
         path: "logs",
-        element: <LogsPage />,
+        element: <div>Логи (В разработке)</div>,
       },
     ],
+  },
+  {
+    path: "/user",
+    element: <MainLayout navItems={USER_NAV_ITEMS} />,
+    errorElement: <RouteErrorBoundary />,
+    children: [
+      {
+        index: true,
+        element: <UserMainPage />,
+      },
+      { path: "profile", element: <UserProfilePage /> },
+      { path: "statistics", element: <UserStatisticPage /> },
+      { path: "upcoming-starts", element: <UserUpcomingStartsPage /> },
+    ],
+  },
+  {
+    path: "/",
+    element: <LoginPage />,
   },
   {
     path: "*",
