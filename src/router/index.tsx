@@ -6,7 +6,7 @@ import { ADMIN_NAV_ITEMS, USER_NAV_ITEMS } from "./nav-config";
 // Admin Features
 import { DashboardPage } from "@/features/admin/dashboard/dashboard-page";
 import { ComplaintsPage } from "@/features/admin/complaints/complaints-page";
-import { LogsPage } from "@/features/admin/logs/logs-page";
+import { LogsPage } from "@/features/admin/admin-logs/logs-page";
 
 // User Features
 import { UserMainPage } from "@/features/user/main/user-main-page";
