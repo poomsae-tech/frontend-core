@@ -15,12 +15,18 @@ import { UserUpcomingStartsPage } from "@/features/user/upcoming-starts/user-upc
 
 // Shared/Auth Features
 import { LoginPage } from "@/features/auth/login-page";
+import { RoleSelectPage } from "@/features/auth/role-select/role-select-page";
 import { NotFoundPage } from "@/features/layout/not-found-page";
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    errorElement: <RouteErrorBoundary />,
+  },
+  {
+    path: "/role-select",
+    element: <RoleSelectPage />,
     errorElement: <RouteErrorBoundary />,
   },
   {
