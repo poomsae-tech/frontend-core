@@ -5,6 +5,7 @@ import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getNameInitials } from "@/lib/get-name-initials";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export interface NavItem {
   to: string;
@@ -62,6 +63,8 @@ export function MainLayout({ navItems = [] }: MainLayoutProps) {
             >
               {userName}
             </Button>
+
+            <ModeToggle />
 
             <Button
               variant="ghost"
