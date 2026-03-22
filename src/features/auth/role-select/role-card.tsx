@@ -1,21 +1,15 @@
-import type { AppRole } from "@/shared/types/role.types";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { RoleCardConfig } from "./role-select.types";
 
 interface RoleCardProps {
   config: RoleCardConfig;
   isSelected: boolean;
-  onClick: (role: AppRole) => void;
+  onClick: (roleId: string) => void;
 }
 
 export function RoleCard({ config, isSelected, onClick }: RoleCardProps) {
-  const { id, title, description, icon: Icon } = config;
+  const { id, title, icon: Icon } = config;
 
   return (
     <Card
@@ -27,30 +21,35 @@ export function RoleCard({ config, isSelected, onClick }: RoleCardProps) {
         if (e.key === "Enter" || e.key === " ") onClick(id);
       }}
       className={cn(
-        "cursor-pointer border-2 py-2 px-3 transition-all duration-150 ease-out",
+        "cursor-pointer border transition-all p-0 duration-150 ease-out relative",
         isSelected
-          ? "border-primary shadow-lg"
-          : "border-transparent hover:border-primary/50 hover:shadow-md",
+          ? "border-primary bg-primary/5 shadow-sm"
+          : "border-border hover:border-primary/50 hover:bg-accent/50",
       )}
     >
-      <CardHeader className="p-0">
+      <CardHeader className="p-2 md:p-4 relative z-10 flex flex-col gap-2">
         <div
           className={cn(
-            "mb-1 flex size-10 items-center justify-center rounded-lg transition-colors duration-150",
-            isSelected ? "bg-primary/15" : "bg-muted",
+            "flex size-8 md:size-11 items-center justify-center rounded-full transition-colors duration-150",
+            isSelected
+              ? "bg-primary text-primary-foreground"
+              : "bg-muted text-muted-foreground",
           )}
         >
-          <Icon
-            className={cn(
-              "size-5 transition-colors duration-150",
-              isSelected ? "text-primary" : "text-muted-foreground",
-            )}
-          />
+          <Icon className="size-4 md:size-5.5" />
         </div>
 
-        <CardTitle className="text-base font-semibold">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle className="text-sm text-shadow-2xs md:text-lg font-medium line-clamp-2 leading-tight">
+          {title}
+        </CardTitle>
       </CardHeader>
+
+      <Icon
+        className={cn(
+          "size-20 md:size-24 z-0 absolute -bottom-6 -right-6 -rotate-25 transition-opacity duration-150",
+          isSelected ? "opacity-25" : "opacity-5",
+        )}
+      />
     </Card>
   );
 }
