@@ -1,11 +1,19 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RouteErrorBoundary } from "@/components/error-boundary";
 import { MainLayout } from "@/features/layout/main-layout";
-import { ADMIN_NAV_ITEMS, USER_NAV_ITEMS } from "./nav-config";
+import {
+  ADMIN_NAV_ITEMS,
+  FEDERATION_NAV_ITEMS,
+  USER_NAV_ITEMS,
+} from "./nav-config";
 
 // Admin Features
-import { DashboardPage } from "@/features/admin/dashboard/dashboard-page";
+import { DashboardPage as AdminDashboardPage } from "@/features/admin/dashboard/dashboard-page";
 import { ComplaintsPage } from "@/features/admin/complaints/complaints-page";
+import { LogsPage } from "@/features/admin/admin-logs/logs-page";
+
+// Federation Features
+import { DashboardPage as FederationDashboardPage } from "@/features/federation/dashboard/dashboard-page";
 
 // User Features
 import { UserMainPage } from "@/features/user/main/user-main-page";
@@ -36,7 +44,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardPage />,
+        element: <AdminDashboardPage />,
       },
       {
         path: "complaints",
@@ -48,10 +56,34 @@ const router = createBrowserRouter([
       },
       {
         path: "logs",
-        element: <div>Логи (В разработке)</div>,
+        element: <LogsPage />,
       },
     ],
   },
+  {
+    path: "/federation",
+    element: <MainLayout navItems={FEDERATION_NAV_ITEMS} />,
+    errorElement: <RouteErrorBoundary />,
+    children: [
+      {
+        index: true,
+        element: <FederationDashboardPage />,
+      },
+      {
+        path: "applications",
+        element: <div>Заявки (В разработке)</div>,
+      },
+      {
+        path: "tournaments",
+        element: <div>Турниры (В разработке)</div>,
+      },
+      {
+        path: "calendar",
+        element: <div>Календарь (В разработке)</div>,
+      },
+    ],
+  },
+
   {
     path: "/user",
     element: <MainLayout navItems={USER_NAV_ITEMS} />,

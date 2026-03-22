@@ -19,6 +19,20 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
   },
 ];
 
+export const FEDERATION_NAV_ITEMS: NavItem[] = [
+  { to: "/federation", label: "Главная", icon: <Home size={16} />, end: true },
+  {
+    to: "/federation/applications",
+    label: "Заявки",
+    icon: <Building2 size={16} />,
+  },
+  {
+    to: "/federation/tournaments",
+    label: "Турниры",
+    icon: <Calendar size={16} />,
+  },
+];
+
 export const USER_NAV_ITEMS: NavItem[] = [
   { to: "/user", label: "Главная", icon: <Home size={16} />, end: true },
   {
