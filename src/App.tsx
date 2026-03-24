@@ -1,10 +1,13 @@
 import { AppRouter } from "@/router";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <AppRouter />
+      <TooltipProvider>
+        <AppRouter />
+      </TooltipProvider>
     </ThemeProvider>
   );
 }
