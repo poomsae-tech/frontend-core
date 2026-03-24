@@ -14,6 +14,7 @@ import { LogsPage } from "@/features/admin/admin-logs/logs-page";
 
 // Federation Features
 import { DashboardPage as FederationDashboardPage } from "@/features/federation/dashboard/dashboard-page";
+import { ApplicationsPage as FederationApplicationsPage } from "@/features/federation/applications/applications-page";
 
 // User Features
 import { UserMainPage } from "@/features/user/main/user-main-page";
@@ -71,11 +72,11 @@ const router = createBrowserRouter([
       },
       {
         path: "applications",
-        element: <div>Заявки (В разработке)</div>,
+        element: <FederationApplicationsPage />,
       },
       {
         path: "tournaments",
-        element: <div>Турниры (В разработке)</div>,
+        element: <div>Турниры (В разработке) </div>,
       },
       {
         path: "calendar",
