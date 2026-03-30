@@ -14,6 +14,7 @@ import { LogsPage } from "@/features/admin/admin-logs/logs-page";
 
 // Federation Features
 import { DashboardPage as FederationDashboardPage } from "@/features/federation/dashboard/dashboard-page";
+import { TournamentsPage as FederationTournamentsPage } from "@/features/federation/tournaments/tournaments-page";
 
 // User Features
 import { UserMainPage } from "@/features/user/main/user-main-page";
@@ -23,18 +24,12 @@ import { UserUpcomingStartsPage } from "@/features/user/upcoming-starts/user-upc
 
 // Shared/Auth Features
 import { LoginPage } from "@/features/auth/login-page";
-import { RoleSelectPage } from "@/features/auth/role-select/role-select-page";
 import { NotFoundPage } from "@/features/layout/not-found-page";
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
-    errorElement: <RouteErrorBoundary />,
-  },
-  {
-    path: "/role-select",
-    element: <RoleSelectPage />,
     errorElement: <RouteErrorBoundary />,
   },
   {
@@ -75,7 +70,7 @@ const router = createBrowserRouter([
       },
       {
         path: "tournaments",
-        element: <div>Турниры (В разработке)</div>,
+        element: <FederationTournamentsPage />,
       },
       {
         path: "calendar",
