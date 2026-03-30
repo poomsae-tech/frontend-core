@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Frown, Funnel, Smile } from "lucide-react";
+import { CustomDataTable } from "@/components/custom-data-table";
 import { cn } from "@/lib/utils";
 import {
   Card,
@@ -12,9 +12,8 @@ import {
 } from "@/components/ui/card";
 import {
   APPLICATIONS,
-  STATISTIC_COLUMNS,
-  type Application,
-} from "./applications-statistic-columns";
+  STATISTIC_COLUMNS
+} from "./applications-columns";
 import {
   Table,
   TableBody,
@@ -31,50 +30,12 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 
-const STATS = [
-  {
-    label: "Новые заявки на аккредитацию",
-    value: 9,
-    subtitle: "+3 за эту неделю",
-    to: "/federation/applications",
-  },
-  {
-    label: "Активные турниры",
-    value: 4,
-    subtitle: "+1 за эту неделю",
-    to: "/federation/tournaments",
-  },
-  {
-    label: "Календарь",
-    value: 4,
-    subtitle: "1 на этой неделе",
-    to: "/federation/calendar",
-  },
-];
-
-
-interface Application {
-  id: number;
-  clubName: string;
-  date: string;
-  status: AppStatus;
-}
 
 
 
-const STATUS_STYLES: Record<AppStatus, string> = {
-  "На рассмотрении": "bg-yellow-500/15 text-yellow-600 border-yellow-500/30",
-  "Отклонена": "bg-red-500/15 text-red-600 border-red-500/30",
-  "Принята": "bg-green-500/15 text-green-600 border-green-500/30",
-};
 
-function ApplicationStatusBadge({ status }: { status: AppStatus }) {
-  return (
-    <Badge variant="outline" className={STATUS_STYLES[status]}>
-      {status}
-    </Badge>
-  );
-}
+
+
 
 export function ApplicationsPage() {
   const getInitials = (name: string) => {
@@ -162,43 +123,7 @@ const [resultFilter, setResultFilter] = useState<Application["status"] | null>(n
 	</Table>
         </CardHeader>
         <CardContent className="px-0 py-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-transparent border-b-border">
-                <TableHead className="px-8 py-4 uppercase text-xs font-semibold tracking-wider text-muted-foreground w-1/3">
-                  Название клуба
-                </TableHead>
-                <TableHead className="py-4 uppercase text-xs font-semibold tracking-wider text-center text-muted-foreground w-1/3">
-                  Дата
-                </TableHead>
-                <TableHead className="py-4 pr-8 uppercase text-xs font-semibold tracking-wider text-right text-muted-foreground w-1/3">
-                  Статус
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredStats.map((app) => (
-                <TableRow key={app.id} className="group transition-colors hover:bg-muted/30 border-b-border">
-                  <TableCell className="px-8 py-4">
-                    <div className="flex items-center gap-4">
-                      <Avatar className="h-9 w-9 border border-border/50">
-                        <AvatarFallback className="bg-muted text-muted-foreground text-xs font-medium uppercase">
-                          {getInitials(app.clubName)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="font-medium text-sm">{app.clubName}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-center text-muted-foreground text-sm tracking-tight py-4">
-                    {app.date}
-                  </TableCell>
-                  <TableCell className="text-right pr-8 py-4">
-                    <ApplicationStatusBadge status={app.status} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <CustomDataTable columns={STATISTIC_COLUMNS} data={filteredStats} />
         </CardContent>
       </Card>
     </div>
