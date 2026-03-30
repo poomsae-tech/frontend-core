@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Frown, Funnel, Smile } from "lucide-react";
+import { CustomDataTable } from "@/components/custom-data-table";
 import { cn } from "@/lib/utils";
 import {
   Card,
@@ -12,9 +13,8 @@ import {
 } from "@/components/ui/card";
 import {
   TOURNAMENTS,
-  STATISTIC_COLUMNS,
-  type Tournament,
-} from "./tournaments-statistic-columns";
+  STATISTIC_COLUMNS
+} from "./tournaments-columns";
 import {
   Table,
   TableBody,
@@ -33,29 +33,10 @@ import { useState } from "react";
 
 
 
-interface Tournament {
-  id: number;
-  tournamentName: string;
-  date: string;
-  place: string;
-  status: TournamentStatus;
-}
 
 
 
-const STATUS_STYLES: Record<TournamentStatus, string> = {
-  "Запланирован": "bg-yellow-500/15 text-yellow-600 border-yellow-500/30",
-  "Проводится": "bg-blue-500/15 text-blue-600 border-blue-500/30",
-  "Завершен": "bg-green-500/15 text-green-600 border-green-500/30",
-};
 
-function TournamentStatusBadge({ status }: { status: TournamentStatus }) {
-  return (
-    <Badge variant="outline" className={STATUS_STYLES[status]}>
-      {status}
-    </Badge>
-  );
-}
 
 export function TournamentsPage() {
   const getInitials = (name: string) => {
@@ -143,49 +124,7 @@ const [resultFilter, setResultFilter] = useState<Tournament["status"] | null>(nu
 	</Table>
         </CardHeader>
         <CardContent className="px-0 py-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-transparent border-b-border">
-                <TableHead className="px-8 py-4 uppercase text-xs font-semibold tracking-wider text-muted-foreground w-1/3">
-                  Название турнира
-                </TableHead>
-                <TableHead className="py-4 uppercase text-xs font-semibold tracking-wider text-center text-muted-foreground w-1/3">
-                  Дата
-                </TableHead>
-<TableHead className="py-4 uppercase text-xs font-semibold tracking-wider text-center text-muted-foreground w-1/3">
-                  Место
-                </TableHead>
-                <TableHead className="py-4 pr-8 uppercase text-xs font-semibold tracking-wider text-right text-muted-foreground w-1/3">
-                  Статус
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredStats.map((tour) => (
-                <TableRow key={tour.id} className="group transition-colors hover:bg-muted/30 border-b-border">
-                  <TableCell className="px-8 py-4">
-                    <div className="flex items-center gap-4">
-                      <Avatar className="h-9 w-9 border border-border/50">
-                        <AvatarFallback className="bg-muted text-muted-foreground text-xs font-medium uppercase">
-                          {getInitials(tour.tournamentName)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="font-medium text-sm">{tour.tournamentName}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-center text-muted-foreground text-sm tracking-tight py-4">
-                    {tour.date}
-                  </TableCell>
-                 <TableCell className="text-center text-muted-foreground text-sm tracking-tight py-4">
-                    {tour.place}
-                  </TableCell>
-                  <TableCell className="text-right pr-8 py-4">
-                    <TournamentStatusBadge status={tour.status} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+         <CustomDataTable columns={STATISTIC_COLUMNS} data={filteredStats} />
         </CardContent>
       </Card>
     </div>
