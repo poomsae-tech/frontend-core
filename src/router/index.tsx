@@ -11,6 +11,7 @@ import {
 import { DashboardPage as AdminDashboardPage } from "@/features/admin/dashboard/dashboard-page";
 import { ComplaintsPage } from "@/features/admin/complaints/complaints-page";
 import { LogsPage } from "@/features/admin/admin-logs/logs-page";
+import { OrganizationsPage } from "@/features/admin/organizations/organizations-page";
 
 // Federation Features
 import { DashboardPage as FederationDashboardPage } from "@/features/federation/dashboard/dashboard-page";
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "organizations",
-        element: <div>Организации (В разработке)</div>,
+        element: <OrganizationsPage />,
       },
       {
         path: "logs",
